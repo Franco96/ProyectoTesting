@@ -1,10 +1,5 @@
-pipeline {
-    agent { docker { image 'maven:3.3.3' } }
-    stages {
-        stage('build') {
-            steps {
-                sh './gradlew test'
-            }
-        }
-    }
+node {
+    checkout scm
+    def dockerfile = 'Dockerfile'
+    def customImage = docker.build("docker-jenkins-pipeline:${env.BUILD_ID}", "-f ${dockerfile} .")
 }
